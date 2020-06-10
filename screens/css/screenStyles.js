@@ -96,6 +96,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#2e78b7',
   },
+  shopWrapper: {
+    flex: 4,
+    padding: 10,
+    height: 10,
+    width: 10,
+  }
 });
 
 export default styles;
