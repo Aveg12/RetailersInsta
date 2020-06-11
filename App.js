@@ -3,12 +3,14 @@ import {createAppContainer} from 'react-navigation';
 import { StyleSheet} from 'react-native';
 import HomeScreen from './screens/HomeScreen';
 import UserView from './screens/userView';
+import Shopkeeper from './screens/shopkeeperView';
 
 
 const Stack = createStackNavigator(
   {
     Home: { screen: HomeScreen },
     User: { screen: UserView },
+    Shopkeeper: { screen: Shopkeeper },
   },
   {
     initialRouteName: 'Home',

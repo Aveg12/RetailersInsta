@@ -1,18 +1,15 @@
-import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View, Button, FlatList } from 'react-native';
-//import Search from 'react-native-search-box';
+import { View, ImageBackground } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import styles from './css/screenStyles';
 import { ListItem, SearchBar } from 'react-native-elements';
-//import { SearchBar } from 'react-native-paper';
-//import { Ionicons } from '@expo/vector-icons/Fontisto';
+import styles from './css/screenStyles';
 
 const list = [
   {
     shopid: 1234,
     name: 'G-store',
     km: '1.2 km',
+    zone: 'Green',
     products: [
       {
         name: 'toothpaste',
@@ -26,12 +23,21 @@ const list = [
         name: 'soap',
         count: 12
       },
+      {
+        name: 'deo',
+        count: 10
+      },
+      {
+        name: 'sanitizer',
+        count: 5
+      },
     ]
   },
   {
     shopid: 1234,
     name: 'Sai-store',
     km: '3 km',
+    zone: 'Orange',
     products: [
       {
         name: 'toothpaste',
@@ -42,61 +48,36 @@ const list = [
         count: 0
       }
     ]
+  },
+  {
+    shopid: 1234,
+    name: 'Medicine-store',
+    km: '3 km',
+    zone: 'Red',
+    products: [
+      {
+        name: 'crocin',
+        count: 2,
+      },
+      {
+        name: 'mask',
+        count: 20,
+      },
+      {
+        name: 'glucose',
+        count: 10, 
+      }
+    ]
   }
 ];
 
 export default class UserView extends Component {
   constructor(props) {
     super(props);
-    this.test = 'Welcome';
-    this.dataTest = [];
     this.state = {
       search: '',
     }
   }
-
-  // componentDidMount() {
-  //  // this.getData();
-  // }
-
-  // getData = () => {
-  //   const data = {
-  //     shopid: 1234,
-  //     name: "G-store",
-  //     products": {
-  //       "toothpaste": {
-  //         "count": 5
-  //       },
-  //       "mask": {
-  //         "count": 10
-  //       },
-  //     "soap": {
-  //       "count": 20
-  //       },
-  //     },
-  //   };
-  //   this.setState({loading:true});
-  //   this.dataTest = {"soap": "test"};
-  //   try {
-  //     this.dataTest = data;
-  //     this.setResult(dataTest);
-  //   } catch(e){
-  //     this.setState({loading:false, error: 'Error'});
-  //   }
-  // }
-
-  // setResult = (res) => {
-  //   this.setState({
-  //     data: [...this.state.data, ...res],
-  //     temp: [...this.state.temp, ...res],
-  //     error: res.error || null,
-  //     loading: false,
-  //   })
-  // }
-
-  // onSearch = async () => {
-  //   this.setState({ searchItem });
-  // };
 
   static navigationOptions = {
     title: 'User',
@@ -110,7 +91,7 @@ export default class UserView extends Component {
     const { search } = this.state;
 
     return (
-      <View>
+      <ImageBackground source={require('./image/Inventory.jpg')} style={styles.container}>
         <SearchBar placeholder="Type here..." value={search} onChangeText={this._onChangeSearch} />
         <ScrollView>
           {search == '' && <View>
@@ -119,6 +100,10 @@ export default class UserView extends Component {
                 <ListItem
                   key={i}
                   title={shopList.name}
+                  subtitle={shopList.zone}
+                  badge={{value : shopList.km, textStyle: { fontSize: 15 }}}
+                  titleStyle={{ color: 'blue', fontSize: 20 }}
+                  subtitleStyle={{ color: shopList.zone.toLowerCase() }}
                   bottomDivider
                 />
               ))
@@ -127,20 +112,22 @@ export default class UserView extends Component {
           }
           {search != '' && <View>
             {
-              list.filter(shopList => shopList.products.some(productList => productList.name === search && productList.count > 0)).map((filteredList, i) => (<ListItem
+              list.filter(shopList => shopList.products.some(productList => productList.name === search.toLowerCase() && productList.count > 0)).map((filteredList, i) => (<ListItem
                 key={i}
                 title={filteredList.name}
-                subtitle={filteredList.km}
+                subtitle={filteredList.zone}
+                titleStyle={{ color: 'blue', fontSize: 20 }}
+                subtitleStyle={{ color: filteredList.zone.toLowerCase() }}
+                badge={{value : filteredList.km, textStyle: { fontSize: 15 }}}
                 bottomDivider
               >
-                <Text>{filteredList.km} away</Text>
               </ListItem>
               ))
             }
           </View>
           }
         </ScrollView>
-      </View>
+      </ImageBackground>
     );
   }
 }
