@@ -111,10 +111,7 @@ export default class ShopKeeper extends Component {
 
   callWatson (imageUri) {
     fetch(`https://gateway.watsonplatform.net/visual-recognition/api/v4/analyze?collection_id=32370a17-5f06-4072-82cc-6cee542d9b43&images_file=${imageUri}`,{
-        method: 'POST',
-        headers: {
-            authorization : `Basic ${('apikey: ljjN3PHWhTe87pE8murisH5XFfrPJhcKHycxzxZsLB2a')}`
-        }
+        method: 'POST'
     }).then(response => {
         if(resNew.images.length > 0) {
             resNew.images.map(images => images.objects.collections.map(collection => 
